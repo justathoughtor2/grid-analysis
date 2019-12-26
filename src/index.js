@@ -1,4 +1,4 @@
-import {vl} from 'vega-lite-api'
+let vl = require('vega-lite-api')
 
 let initialData = [
   [true, true, true, true],
