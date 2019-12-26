@@ -1,4 +1,32 @@
-let vl = require('vega-lite-api')
+let vl = function() {
+  let vega = require('vega')
+  let vegalite = require('vega-lite')
+  let api = require('vega-lite-api')
+  let tooltip = require('vega-tooltip')
+
+  const options = {
+    config: {
+      // vega-lite default configuration
+      config: {
+        view: {width: 400, height: 300},
+        mark: {tooltip: null}
+      }
+    },
+    init: view => {
+      // initialize tooltip handler
+      view.tooltip(new tooltip.Handler().call);
+      // enable horizontal scrolling for large plots
+      if (view.container()) view.container().style['overflow-x'] = 'auto';
+    },
+    view: {
+      // view constructor options
+      loader: vega.loader({baseURL: 'https://vega.github.io/vega-datasets/'}),
+      renderer: 'canvas'
+    }
+  };
+  
+  return api.register(vega, vegalite, options);
+}
 
 let initialData = [
   [true, true, true, true],
