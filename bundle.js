@@ -1,8 +1,66 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+let vl = require('vega-lite-api').vl
+
+let initialData = [
+  [true, true, true, true],
+  [false, true, true, true],
+  [false, true, true, false],
+  [true, false, true, false]
+]
+
+const generateData = function(init, numAdjacent) {
+  let data = []
+  
+  for(let x = 0; x < init.length; x++) {
+    for(let y = 0; y < init[x].length; y++) {
+      let datum = {'x': x, 'y': y, 'activeOrMatch': init[x][y] ? 'active' : 'inactive'}
+      if(init[x][y]) {
+        let score = 0
+        
+        x + 1 < init.length && init[x+1][y] ? score++ : score
+        x - 1 > 0 && init[x-1][y] ? score++ : score
+        y + 1 < init[x].length && init[x][y+1] ? score++ : score
+        y - 1 > 0 && init[x][y-1] ? score++ : score
+        
+        console.log(score)
+        
+        if(score == numAdjacent) {
+          datum.activeOrMatch = 'match'
+        }
+      }
+      
+      data.push(datum)
+    }
+  }
+  
+  return data
+}
+
+let data = generateData(initialData, 3)
+
+const scale = {
+  domain: ['inactive', 'active', 'match'],
+  range: ['gray', 'blue', 'orange']
+}
+
+vl.markPoint({'filled': true})
+  .data(data)
+  .encode(
+    vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
+    vl.size().value(300),
+    vl.x().fieldO('x'),
+    vl.y().fieldO('y').sort('descending')
+  )
+  .width(600)
+  .height(400)
+  .autosize({'type': 'fit-x', 'contains': 'padding'})
+  .render()
+},{"vega-lite-api":2}],2:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.vl = {}));
-}(this, (function (exports) { 'use strict';
+}(this, function (exports) { 'use strict';
 
   const Data = Symbol('data');
   let id_counter = 0;
@@ -42069,4 +42127,6 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
+
+},{}]},{},[1]);

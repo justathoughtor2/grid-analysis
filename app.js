@@ -1,3 +1,5 @@
+let vl = require('vega-lite-api').vl
+
 let initialData = [
   [true, true, true, true],
   [false, true, true, true],
