@@ -1,4 +1,4 @@
-vl.register(vega, vegaLite, {});
+vl.register(vega, vegaLite, {})
 
 let initialData = [
   [true, true, true, true],
@@ -54,3 +54,8 @@ vl.markPoint({'filled': true})
   .height(400)
   .autosize({'type': 'fit-x', 'contains': 'padding'})
   .render()
+  .then(chart => {
+    document
+      .getElementById("chart")
+      .appendChild(chart)
+  })
