@@ -40,7 +40,7 @@ const scale = {
   range: ['gray', 'blue', 'orange']
 }
 
-return vl.markPoint({'filled': true})
+vl.markPoint({'filled': true})
   .data(data)
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
