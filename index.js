@@ -98,8 +98,8 @@ let generateChart = function() {
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
     vl.size().value(300),
-    vl.x().fieldO('y').sort('descending'),
-    vl.y().fieldO('x')
+    vl.y().fieldO('x').sort('descending').title('x'),
+    vl.x().fieldO('y').title('y')
   )
   .width(510)
   .height(340)
