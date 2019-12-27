@@ -21,8 +21,6 @@ const generateData = function(init, numAdjacent) {
         y + 1 < init[x].length && init[x][y+1] ? score++ : score
         y - 1 > 0 && init[x][y-1] ? score++ : score
         
-        console.log(score)
-        
         if(score == numAdjacent) {
           datum.activeOrMatch = 'match'
         }
@@ -47,8 +45,8 @@ vl.markPoint({'filled': true})
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
     vl.size().value(300),
-    vl.x().fieldO('x'),
-    vl.y().fieldO('y').sort('descending')
+    vl.y().fieldO('x'),
+    vl.x().fieldO('y').sort('descending')
   )
   .width(600)
   .height(400)
