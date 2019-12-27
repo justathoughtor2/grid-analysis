@@ -14,7 +14,7 @@ const generateButtonGrid = function(width, height) {
   for(let y = 0; y < height; y++) {
     grid += '<div class="row">'
     for(let x = 0; x < width; x++) {
-      grid += `<button class="btn btn-secondary" id="${x + ',' + y}">Inactive</button>`
+      grid += `<button class="btn btn-secondary" id="${x + '-' + y}">Inactive</button>`
     }
     grid += '</div>'
   }
@@ -42,17 +42,17 @@ $('#adjacency').change(function() {
   generateButtonGrid(parseInt($('#width').val()), parseInt($('#height').val()))
 })
 
-$('.btn').click(function(button) {
-  xy = $(button).attr('id').split(',')
+$('.btn').click(function(this) {
+  xy = $(this).attr('id').split('-')
   x = xy[0]
   y = xy[1]
 
   initialData[x][y] = !initialData[x][y]
-  if($(button).hasClass('btn-secondary')) {
-    $(button).addClass('btn-primary').removeClass('btn-secondary').text('Active')
+  if($(this).hasClass('btn-secondary')) {
+    $(this).addClass('btn-primary').removeClass('btn-secondary').text('Active')
   }
   else {
-    $(button).addClass('btn-secondary').removeClass('btn-primary').text('Inactive')
+    $(this).addClass('btn-secondary').removeClass('btn-primary').text('Inactive')
   }
 
   generateData(initialData, parseInt($('#adjacency').val()))
