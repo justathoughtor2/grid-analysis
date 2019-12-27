@@ -93,7 +93,7 @@ const scale = {
 }
 
 let generateChart = function() {
-  vl.markPoint({'filled': true})
+  chartSpec = vl.markPoint({'filled': true})
   .data(data)
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
@@ -104,10 +104,9 @@ let generateChart = function() {
   .width(510)
   .height(340)
   .autosize({'type': 'fit-x', 'contains': 'padding'})
-  .render()
-  .then(chart => {
-    $('#chart').html(chart)
-  })
+  .toJSON()
+
+  vegaEmbed('#chart', chartSpec)
 }
 
 generateChart()
