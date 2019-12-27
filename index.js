@@ -42,7 +42,7 @@ $('#adjacency').change(function() {
   generateButtonGrid(parseInt($('#width').val()), parseInt($('#height').val()))
 })
 
-$('.btn').click(function(this) {
+$('.btn').click(function() {
   xy = $(this).attr('id').split('-')
   x = xy[0]
   y = xy[1]
