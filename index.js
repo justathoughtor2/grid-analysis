@@ -7,6 +7,59 @@ let initialData = [
   [true, false, true, false]
 ]
 
+const generateButtonGrid = function(width, height) {
+  let grid = ''
+  initialData = []
+
+  for(let y = 0; y < height; y++) {
+    grid += '<div class="row">'
+    for(let x = 0; x < width; x++) {
+      grid += `<button class="btn btn-secondary" id="${x + ',' + y}">Inactive</button>`
+    }
+    grid += '</div>'
+  }
+
+  for(let x = 0; x < width; x++) {
+    initialData.push([])
+    for(let y = 0; y < height; y++) {
+      initialData[x].push(false)
+    }
+  }
+
+  $('#button-grid').html(grid)
+  generateData(initialData, parseInt($('#adjacency').val()))
+  generateChart()
+}
+
+$('#width').change(function() {
+  generateButtonGrid(parseInt($('#width').val()), parseInt($('#height').val()))
+})
+
+$('#height').change(function() {
+  generateButtonGrid(parseInt($('#width').val()), parseInt($('#height').val()))
+})
+
+$('#adjacency').change(function() {
+  generateButtonGrid(parseInt($('#width').val()), parseInt($('#height').val()))
+})
+
+$('.btn').click(function(button) {
+  xy = $(button).attr('id').split(',')
+  x = xy[0]
+  y = xy[1]
+
+  initialData[x][y] = !initialData[x][y]
+  if($(button).hasClass('btn-secondary')) {
+    $(button).addClass('btn-primary').removeClass('btn-secondary').text('Active')
+  }
+  else {
+    $(button).addClass('btn-secondary').removeClass('btn-primary').text('Inactive')
+  }
+
+  generateData(initialData, parseInt($('#adjacency').val()))
+  generateChart()
+})
+
 const generateData = function(init, numAdjacent) {
   let data = []
   
@@ -40,7 +93,8 @@ const scale = {
   range: ['gray', 'blue', 'orange']
 }
 
-vl.markPoint({'filled': true})
+let generateChart = function() {
+  vl.markPoint({'filled': true})
   .data(data)
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
@@ -48,8 +102,8 @@ vl.markPoint({'filled': true})
     vl.y().fieldO('x').sort('descending'),
     vl.x().fieldO('y')
   )
-  .width(600)
-  .height(400)
+  .width(510)
+  .height(340)
   .autosize({'type': 'fit-x', 'contains': 'padding'})
   .render()
   .then(chart => {
@@ -57,3 +111,6 @@ vl.markPoint({'filled': true})
       .getElementById("chart")
       .appendChild(chart)
   })
+}
+
+generateChart()
