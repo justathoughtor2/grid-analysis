@@ -28,7 +28,6 @@ const generateButtonGrid = function(width, height) {
 
   $('#button-grid').html(grid)
   generateData(initialData, parseInt($('#adjacency').val()))
-  generateChart()
 }
 
 $('#width').change(function() {
@@ -107,9 +106,7 @@ let generateChart = function() {
   .autosize({'type': 'fit-x', 'contains': 'padding'})
   .render()
   .then(chart => {
-    document
-      .getElementById("chart")
-      .appendChild(chart)
+    $('#chart').html(chart)
   })
 }
 
