@@ -44,8 +44,8 @@ $('#adjacency').change(function() {
 
 $('.btn').click(function() {
   xy = $(this).attr('id').split('-')
-  x = xy[0]
-  y = xy[1]
+  x = parseInt(xy[0])
+  y = parseInt(xy[1])
 
   initialData[x][y] = !initialData[x][y]
   if($(this).hasClass('btn-secondary')) {
@@ -98,8 +98,8 @@ let generateChart = function() {
   .encode(
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
     vl.size().value(300),
-    vl.y().fieldO('x').sort('descending'),
-    vl.x().fieldO('y')
+    vl.x().fieldO('y').sort('descending'),
+    vl.y().fieldO('x')
   )
   .width(510)
   .height(340)
