@@ -11,7 +11,7 @@ const generateData = function(init, numAdjacent) {
   let data = []
   
   for(let y = 0; y < init.length; y++) {
-    for(let x = init[y].length - 1; x >= 0; x--) {
+    for(let x = 0; x < init[y].length; x++) {
       let datum = {'x': x, 'y': y, 'activeOrMatch': init[y][x] ? 'active' : 'inactive'}
       if(init[y][x]) {
         let score = 0
@@ -42,7 +42,7 @@ const generateButtonGrid = function(width, height) {
   for(let y = 0; y < height; y++) {
     grid += '<div class="row">'
     initialData.push([])
-    for(let x = width - 1; x >= 0; x--) {
+    for(let x = 0; x < width; x++) {
       grid += `<button class="btn btn-secondary" id="${y + '-' + x}">Inactive</button>`
       initialData[y].push(false)
     }
@@ -68,7 +68,6 @@ const generateButtonGrid = function(width, height) {
     data = generateData(initialData, parseInt($('#adjacency').val()))
     generateChart()
   })
-  data = generateData(initialData, parseInt($('#adjacency').val()))
 }
 
 $('#width').change(function() {
@@ -95,11 +94,10 @@ let generateChart = function() {
     vl.color().fieldN('activeOrMatch').scale(scale).title('Active, Inactive or Match'),
     vl.size().value(300),
     vl.y().fieldO('y'),
-    vl.x().fieldO('x').sort('descending')
+    vl.x().fieldO('x')
   )
-  .width(510)
+  .width('container')
   .height(340)
-  .autosize({'type': 'fit-x'})
   .toJSON()
 
   vegaEmbed('#chart', chartSpec)
